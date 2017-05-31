@@ -5,19 +5,31 @@ using UnityEngine;
 public class Pursuit : MonoBehaviour {
 
 
+	private Coroutine currentRoutine; 
+
+
+
 	void Start(){
-		Eye_Simulation.foundPlayer += Test; 
-		Proximity_Sensing.lostPlayer += Test2; 
+		Eye_Simulation.foundPlayer += resumePursuit; 
+		Proximity_Sensing.lostPlayer += pausePursuit; 
 	}
 
-	void Test(){
+	IEnumerator pursuit(){
+		while (true) {
+			Debug.Log ("in pursuit"); 
+			yield return new WaitForSeconds(0.04f); 
+		}
+	}
 
-		Debug.Log ("in pursuit"); 
+	void resumePursuit(){
+		currentRoutine = null; 
+		currentRoutine = StartCoroutine (pursuit ()); 
 	}
 		
-	void Test2(){
+	void pausePursuit(){
 
 		Debug.Log ("lost him"); 
+		StopCoroutine (currentRoutine); 
 	}
 
 

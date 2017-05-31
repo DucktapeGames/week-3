@@ -61,6 +61,7 @@ public class Eye_Simulation : MonoBehaviour {
 				if (hit.transform.tag == "Player" && 
 					Vector2.Angle(new Vector2(-transform.up.x, -transform.up.y), new Vector2(playerTrans.position.x, playerTrans.position.y))<viewAngle) {
 					foundPlayer (); 
+					break; 
 				}
 			}
 			Debug.DrawRay (body.position, playerTrans.position, Color.red); 
