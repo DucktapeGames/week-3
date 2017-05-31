@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour {
 	// Use this for initialization
 	Vector3 pos;                                // For movement
 	public float speed;                         // Speed of movement
+	Vector3 moveDirection;
+	float angle;
 		
 	void Start () {
 		pos = transform.position;          // Take the initial position
@@ -26,5 +28,15 @@ public class PlayerMovement : MonoBehaviour {
 			pos += Vector3.down;
 		}
 		transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);    // Move there
+	}
+
+	 void Update()
+	{
+		moveDirection = gameObject.transform.position - pos; 
+		if (moveDirection != Vector3.zero) 
+		{
+			angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		}
 	}
 }
