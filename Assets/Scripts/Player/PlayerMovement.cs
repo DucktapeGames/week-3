@@ -27,7 +27,24 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S) && transform.position == pos) {        // Down
 			pos += Vector3.down;
 		}
+		 if (Input.GetMouseButton(0)) {
+			 CheckForHit();
+		 }
 		transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);    // Move there
+	}
+
+	void CheckForHit() {
+		RaycastHit objectHit;
+
+		Vector3 fwd = transform.TransformDirection(Vector3.up);
+		Debug.DrawRay(transform.position, fwd, Color.green);
+		if (Physics.Raycast(transform.position, fwd, out objectHit, 1))
+		{
+			//do something if hit object ie
+			if(objectHit.transform.gameObject.tag == "Interactable") {
+				Debug.Log("Close to somethin");
+			}
+		}
 	}
 
 	 void Update()
