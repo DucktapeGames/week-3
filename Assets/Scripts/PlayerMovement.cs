@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour {
 		moveDirection = gameObject.transform.position - pos; 
 		if (moveDirection != Vector3.zero) 
 		{
-			angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+			angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg + 90.0f;
 			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
 	}
