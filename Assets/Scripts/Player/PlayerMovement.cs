@@ -42,7 +42,8 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			//do something if hit object ie
 			if(objectHit.transform.gameObject.tag == "Interactable") {
-				Debug.Log("Close to somethin");
+				Damageable dmg = objectHit.transform.gameObject.GetComponent<Damageable>();
+				dmg.Damage(10);
 			}
 		}
 	}
