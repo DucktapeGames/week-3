@@ -26,6 +26,10 @@ public class DamageableEntity : MonoBehaviour {
     }
 
     void Die(){
+        if(gameObject.tag == "Container") {
+            Spawner spawner = GetComponent<Spawner>();
+            spawner.Spawn();
+        }
         Debug.Log("Oh noes I died");
     }
 }

@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (Physics.Raycast(transform.position, fwd, out objectHit, 1))
 		{
 			//do something if hit object ie
-			if(objectHit.transform.gameObject.tag == "Interactable") {
+			if(objectHit.transform.gameObject.tag == "Container") {
 				Damageable dmg = objectHit.transform.gameObject.GetComponent<Damageable>();
 				dmg.Damage(10);
 			}
