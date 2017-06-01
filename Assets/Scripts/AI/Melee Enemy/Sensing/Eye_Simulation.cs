@@ -37,14 +37,14 @@ public class Eye_Simulation : MonoBehaviour {
 		Gizmos.color = Color.white; 
 		Gizmos.DrawWireSphere (body.position, viewRange * body.localScale.x); 
 		Gizmos.color = Color.blue; 
-		Gizmos.DrawLine (body.position, DirectionFromAngle (viewAngle)*viewRange * body.localScale.x);
+		Gizmos.DrawLine (body.position, DirectionFromAngle (viewAngle + transform.rotation.z)*viewRange * body.localScale.x);
 		Gizmos.color = Color.blue; 
-		Gizmos.DrawLine (body.position, DirectionFromAngle (-viewAngle)*viewRange * body.localScale.x);
-	}
+		Gizmos.DrawLine (body.position,body.position + DirectionFromAngle (-viewAngle + transform.rotation.z)*viewRange * body.localScale.x);
+	} 
 
 
 	Vector3 DirectionFromAngle(float _angle){
-		return new Vector3 (Mathf.Sin ((_angle + 180 + transform.rotation.z) * Mathf.Deg2Rad), Mathf.Cos ((_angle + 180 + transform.rotation.z) * Mathf.Deg2Rad), 0); 
+		return new Vector3 (Mathf.Sin ((_angle + 180 ) * Mathf.Deg2Rad), Mathf.Cos ((_angle + 180 + transform.rotation.z) * Mathf.Deg2Rad), 0); 
 
 	}
 
