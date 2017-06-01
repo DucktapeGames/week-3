@@ -37,7 +37,7 @@ public class Eye_Simulation : MonoBehaviour {
 		Gizmos.color = Color.white; 
 		Gizmos.DrawWireSphere (body.position, viewRange * body.localScale.x); 
 		Gizmos.color = Color.blue; 
-		Gizmos.DrawLine (body.position, DirectionFromAngle (viewAngle + transform.rotation.z)*viewRange * body.localScale.x);
+		Gizmos.DrawLine (body.position,body.position + DirectionFromAngle (viewAngle + transform.rotation.z)*viewRange * body.localScale.x);
 		Gizmos.color = Color.blue; 
 		Gizmos.DrawLine (body.position,body.position + DirectionFromAngle (-viewAngle + transform.rotation.z)*viewRange * body.localScale.x);
 	} 
