@@ -18,8 +18,8 @@ public class Player : MonoBehaviour {
 		
 	}
 
-	void OnCollisionEnter(Collision col) {
-		if(col.gameObject.tag == "Life") {
+	void OnTriggerEnter2D(Collider2D other) {
+		if(other.tag == "Life") {
 			if(dmg.hp + 20 >= dmg.totalHp) {
 				dmg.hp = dmg.totalHp;
 			}
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 			}
 		}
 
-		if(col.gameObject.tag == "Mana") {
+		if(other.tag == "Mana") {
 			if(mana + 20 >= totalMana) {
 				mana = totalMana;
 			}
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour {
 			}
 		}
 
-		if(col.gameObject.tag == "Stamina") {
+		if(other.tag == "Stamina") {
 			if(stamina + 20 >= totalStamina) {
 				stamina = totalStamina;
 			}
@@ -46,6 +46,6 @@ public class Player : MonoBehaviour {
 			}
 		}
 		Debug.Log("yuss");
-		Destroy(col.gameObject);
+		//Destroy(col.gameObject);
 	}
 }
