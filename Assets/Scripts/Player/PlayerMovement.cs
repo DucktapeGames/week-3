@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S) && transform.position == pos) {        // Down
 			pos += Vector3.down;
 		}
-		 if (Input.GetMouseButton(0)) {
+		 if (Input.GetKey(KeyCode.J)) {
 			 CheckForHit();
 		 }
 		transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);    // Move there

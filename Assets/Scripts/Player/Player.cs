@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 			else {
 				dmg.hp += 20;
 			}
+			Destroy(other.gameObject);
 		}
 
 		if(other.tag == "Mana") {
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour {
 			else {
 				mana += 20;
 			}
+			Destroy(other.gameObject);
 		}
 
 		if(other.tag == "Stamina") {
@@ -44,8 +46,7 @@ public class Player : MonoBehaviour {
 			else {
 				stamina += 20;
 			}
+			Destroy(other.gameObject);
 		}
-		//Debug.Log("yuss");
-		Destroy(other.gameObject);
 	}
 }
