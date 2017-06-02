@@ -45,7 +45,7 @@ public class Player : MonoBehaviour {
 				stamina += 20;
 			}
 		}
-		Debug.Log("yuss");
-		//Destroy(col.gameObject);
+		//Debug.Log("yuss");
+		Destroy(other.gameObject);
 	}
 }
