@@ -19,7 +19,7 @@ public class DialogBox : MonoBehaviour {
 
 	public void LoadLineWithCallback(Line l, UnityAction callback) {
 		dialog = l.message;
-		uiImage.sprite = Resources.Load<Sprite>(l.image);
+		uiImage.sprite = Resources.Load<Sprite>("DialogImages/" + l.image);
 		dialogCompleted.RemoveAllListeners();
 		dialogCompleted.AddListener(callback);
 		Reset();
@@ -27,8 +27,18 @@ public class DialogBox : MonoBehaviour {
 
 	public void Reset() {
 		line = 0;
+
+		if(textCoroutine != null) {
+			StopCoroutine(textCoroutine);
+		}
+
+		if(indicatorCoroutine != null) {
+			StopCoroutine(indicatorCoroutine);
+		}
+		
 		moreTextIndicator.enabled = false;
-		textCoroutine = DisplayLine();
+		textCoroutine = DisplayLine ();
+
 		StartCoroutine(textCoroutine);
 	}
 
@@ -64,8 +74,42 @@ public class DialogBox : MonoBehaviour {
 
 	// Coroutine that displays the text in a dialog fashon (one letter at a time)
 	IEnumerator DisplayLine() {
-		for (int i = 0; i <= dialog[line].Length; i++) {
-			uiText.text = dialog[line].Substring(0, i);
+		var tags = new List<string>();
+		var currentLine = dialog[line];
+
+		// Looks for rich text tags
+		for (int i = 0; i < dialog[line].Length; i++) {
+			if(currentLine[i].Equals('<')) {
+				i++;
+				if(currentLine[i].Equals('/')) {
+					i++;
+					int length = 0;
+					while(!currentLine[i + length].Equals('>')) {
+						length++;
+					}
+
+					tags.Remove(currentLine.Substring(i, length));
+					i += length;
+				} else {
+					int length = 0;
+					while(!currentLine[i + length].Equals('>')) {
+						length++;
+					}
+
+					tags.Add(currentLine.Substring(i, length));
+
+					i += length;
+				}
+			}
+
+			var substring = currentLine.Substring(0, i + 1);
+
+			// Appends rich text closing tags, if any.
+			for(int j = tags.Count - 1; j >= 0; j--) {
+				substring += "</" + tags[j] + ">";
+			}
+
+			uiText.text = substring;
 			yield return new WaitForSeconds(12.0f / textSpeed); // 60s / (speed * 5 letters per word)
 		}
 
