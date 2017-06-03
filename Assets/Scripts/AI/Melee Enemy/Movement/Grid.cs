@@ -14,12 +14,17 @@ public class Grid: MonoBehaviour {
 	int gridSizeX, gridSizeY; //how many nodes on the x and y; 
 	public List<Node> path; 
 
+	public int MaxSize{
+		get{
+			return gridSizeX * gridSizeY; 
+		}
+	}
+
 	void Start(){
 		nodeDiameter = nodeRadius * 2; 
 		gridSizeX =Mathf.RoundToInt (gridSize.x / nodeDiameter); 
 		gridSizeY =Mathf.RoundToInt (gridSize.y / nodeDiameter); 
 		createGrid (); 
-		Debug.Log (gridSizeX + " " + gridSizeY); 
 	}
 
 	void createGrid(){
@@ -42,9 +47,9 @@ public class Grid: MonoBehaviour {
 		percenty = Mathf.Clamp01 (percenty); 
 		int x = Mathf.RoundToInt((gridSizeX - 1) * percentx); 
 		int y = Mathf.RoundToInt((gridSizeY - 1) * percenty); 
-		Debug.Log (x + " " + y); 
 		return grid [x, y]; 
 	}
+
 
 	public List<Node> getNeighbours(Node _node){
 			List<Node> neighbours = new List<Node> (); 
@@ -65,7 +70,7 @@ public class Grid: MonoBehaviour {
 			return neighbours; 
 		}
 
-	void OnDrawGizmos(){
+	/*void OnDrawGizmos(){
 		Gizmos.color = Color.black; 
 		Gizmos.DrawWireCube (mapCenter.position, new Vector3(gridSize.x, gridSize.y, 0));
 		if (grid != null) {
@@ -84,7 +89,7 @@ public class Grid: MonoBehaviour {
 				Gizmos.DrawCube (new Vector3(n.worldPosition.x,n.worldPosition.y,0.4f), Vector3.one * (nodeDiameter-0.1f)); 
 			}
 		}
-	}
+	}*/
 
 
 

@@ -7,23 +7,26 @@ public class Pursuit : MonoBehaviour {
 
 	private Coroutine currentRoutine; 
 	public Transform playerTrans; 
-	[SerializeField][Range(0,100)]
-	public float distanceFromPlayerOffSetSoItDoesNotOverlap;
 	[SerializeField][Range(0,360)]
 	public float enemyTurnVelocity; 
 	[SerializeField][Range(0,100)]
 	public float enemyVelocity;
-	[SerializeField][Range(0,5)]
-	public float detectionDistance;
+	[SerializeField][Range(0,10)]
+	public float offsetDistanceFromTargetSoItDoesNotOverlap; 
+	//public Rigidbody2D rbody; 
 	//raycasting
 	RaycastHit2D hit; 
-	//bs
-	private Vector2 directionToPlayer; 
+	//pathfinding
+	private Grid grid; 
+	private Vector3 directionToPlayer; 
 
 
 	void Awake(){
 		//rbody = this.GetComponent<Rigidbody2D> (); 
 		playerTrans = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform>();
+	    grid = GameObject.FindGameObjectWithTag ("PathFindingManager").GetComponent<Grid> ();
+		directionToPlayer = this.transform.position; 
+
 	}
 
 	void Start(){
@@ -32,7 +35,7 @@ public class Pursuit : MonoBehaviour {
 	}
 
 	IEnumerator pursuit(){ 
-		while (true) {
+		while (true) { 
 			//right now it only looks at player. 
 			if (Vector2.Angle (new Vector2 (-transform.up.x, -transform.up.y), new Vector2 (playerTrans.position.x, playerTrans.position.y)) > 10) {
 				if (Vector3.Cross((playerTrans.position - this.transform.position), -this.transform.up).z <0) { 
@@ -41,7 +44,11 @@ public class Pursuit : MonoBehaviour {
 					this.transform.RotateAround (transform.position, Vector3.forward, -enemyTurnVelocity * Time.fixedDeltaTime); 
 				}
 			}
-
+			if (Vector3.Distance (transform.position, playerTrans.position) > offsetDistanceFromTargetSoItDoesNotOverlap
+			   && grid.path != null) {
+				directionToPlayer = new Vector3 (grid.path [0].worldPosition.x, grid.path [0].worldPosition.y, 0);
+				this.transform.position = Vector3.Lerp (this.transform.position, directionToPlayer, enemyVelocity * Time.fixedDeltaTime);
+			} 
 			yield return new WaitForSeconds(0.04f); 
 		}
 	}
@@ -53,7 +60,9 @@ public class Pursuit : MonoBehaviour {
 	void pausePursuit(){
 
 		Debug.Log ("lost him"); 
-		StopCoroutine (currentRoutine); 
+		if (currentRoutine != null) {
+			StopCoroutine (currentRoutine); 
+		}
 	}
 
 
