@@ -6,14 +6,21 @@ public class ProjectileShoot : MonoBehaviour {
 
 	// Use this for initialization
 	public Rigidbody2D projectilePrefab;
+	Rigidbody2D[] projectiles = new Rigidbody2D[20];
+	Rigidbody2D currPrefab;
 	public float fireSpeed = 0.5f;
 	public float projectileSpeed = 50;
 	public float coolDown;
 	public float xVal;
 	public float yVal;
 	Vector3 pos; 
+	int projectileCounter;
 	void Start () {
+		projectileCounter = 0;
 		pos = transform.position;
+		for(int i = 0; i < projectiles.Length; i++) {
+			projectiles[i] = Instantiate(projectilePrefab, new Vector3(-100, -100, 0), Quaternion.identity) as Rigidbody2D;
+		}
 	}
 	
 	// Update is called once per frame
@@ -43,8 +50,14 @@ public class ProjectileShoot : MonoBehaviour {
 
 	void Fire()
 	{
-		Rigidbody2D pPrefab = Instantiate(projectilePrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as Rigidbody2D;
-		pPrefab.AddForce(transform.up * projectileSpeed);
+		if(projectileCounter > 19) {
+			projectileCounter = 0;
+		}
+		currPrefab = projectiles[projectileCounter];
+		currPrefab.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+		currPrefab.transform.rotation = Quaternion.identity;
+		currPrefab.AddForce(transform.up * projectileSpeed);
 		coolDown = Time.time + fireSpeed;
+		projectileCounter++;
 	}
 }
