@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	Vector3 pos;                                // For movement
@@ -27,9 +27,9 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S) && transform.position == pos) {        // Down
 			pos += Vector3.down;
 		}
-		 if (Input.GetKey(KeyCode.J)) {
-			 CheckForHit();
-		 }
+		if (Input.GetKey(KeyCode.J)) {
+			CheckForHit();
+		}
 		transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);    // Move there
 	}
 
@@ -48,8 +48,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	 void Update()
-	{
+	void Update() {
 		moveDirection = gameObject.transform.position - pos; 
 		if (moveDirection != Vector3.zero) 
 		{
