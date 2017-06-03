@@ -11,8 +11,6 @@ public class ProjectileShoot : MonoBehaviour {
 	public float fireSpeed = 0.5f;
 	public float projectileSpeed = 50;
 	public float coolDown;
-	public float xVal;
-	public float yVal;
 	Vector3 pos; 
 	int projectileCounter;
 	void Start () {
@@ -53,10 +51,10 @@ public class ProjectileShoot : MonoBehaviour {
 		if(projectileCounter > 19) {
 			projectileCounter = 0;
 		}
-		currPrefab = projectiles[projectileCounter];
-		currPrefab.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-		currPrefab.transform.rotation = Quaternion.identity;
-		currPrefab.AddForce(transform.up * projectileSpeed);
+		
+		projectiles[projectileCounter].transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+		projectiles[projectileCounter].transform.rotation = Quaternion.identity;
+		projectiles[projectileCounter].AddForce(transform.up * projectileSpeed);
 		coolDown = Time.time + fireSpeed;
 		projectileCounter++;
 	}
