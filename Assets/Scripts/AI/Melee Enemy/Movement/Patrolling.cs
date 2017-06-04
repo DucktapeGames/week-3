@@ -39,8 +39,10 @@ public class Patrolling : MonoBehaviour {
 				&& grid.path != null && PathIndex<PathNodeNUmber) {
 				targetDirection = new Vector3 (grid.path [PathIndex].worldPosition.x, grid.path [PathIndex].worldPosition.y, 0);
 				this.transform.position = Vector3.Lerp (this.transform.position, targetDirection, referenceValues.enemyVelocity * Time.fixedDeltaTime);
-			} else if(Vector3.Distance (transform.position, targetDirection) < 0.3f && PathIndex+1<PathNodeNUmber){
+			}
+			if(Vector3.Distance (transform.position, targetDirection) < 0.3f && PathIndex+1<PathNodeNUmber){
 				PathIndex++; 
+				//Debug.Log ("Paht Index");
 			}
 			yield return new WaitForSeconds(0.04f); 
 		}

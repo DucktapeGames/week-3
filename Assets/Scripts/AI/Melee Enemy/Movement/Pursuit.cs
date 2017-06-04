@@ -45,7 +45,7 @@ public class Pursuit : MonoBehaviour {
 				}
 			}
 			if (Vector3.Distance (transform.position, playerTrans.position) > offsetDistanceFromTargetSoItDoesNotOverlap
-			   && grid.path != null) {
+				&& grid.path != null && grid.path.Count>0) {
 				directionToPlayer = new Vector3 (grid.path [0].worldPosition.x, grid.path [0].worldPosition.y, 0);
 				this.transform.position = Vector3.Lerp (this.transform.position, directionToPlayer, enemyVelocity * Time.fixedDeltaTime);
 			} 
