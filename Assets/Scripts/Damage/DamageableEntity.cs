@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageableEntity : MonoBehaviour {
 
 	public uint totalHp;
-    uint hp;
+    public uint hp;
 	Damageable dmg;
 
     // Use this for initialization
@@ -25,7 +25,11 @@ public class DamageableEntity : MonoBehaviour {
         }
     }
 
-    void Die(){
-        Debug.Log("Oh noes I died");
+    void Die() {
+        if(gameObject.tag == "Container") {
+            Spawner spawner = GetComponent<Spawner>();
+            spawner.Spawn();
+        }
+        Destroy(gameObject);
     }
 }
