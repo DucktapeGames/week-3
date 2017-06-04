@@ -16,21 +16,17 @@ public class Eye_Simulation : MonoBehaviour {
 	public Transform body, playerTrans; 
 	private RaycastHit2D hit; 
 	private Coroutine curretRoutine; 
+	private Pursuit pursuitScriptReferece; 
+	private PathFinding pathfindingScriptReferece; 
 
-	//events
-	public delegate void PlayerDetection(); 
-	public static event PlayerDetection foundPlayer; 
 
 
 	void Awake(){
 		body = this.transform;
 		playerTrans = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform>();
+		pursuitScriptReferece = this.gameObject.GetComponent<Pursuit> (); 
+		pathfindingScriptReferece = GameObject.FindGameObjectWithTag ("PathFindingManger").GetComponent<PathFinding> ();
 	}
-	void Start(){
-		Proximity_Sensing.sensingPlayer += resumeLookForPlayer; 
-		Proximity_Sensing.lostPlayer += pauseLookForPlayer; 
-	}
-
 	  
 
 	/*void OnDrawGizmos(){
@@ -62,7 +58,8 @@ public class Eye_Simulation : MonoBehaviour {
 			if (hit) {
 				if (hit.transform.tag == "Player" && 
 					Vector2.Angle(new Vector2(-transform.up.x, -transform.up.y), new Vector2(playerTrans.position.x, playerTrans.position.y))<viewAngle) {
-					foundPlayer (); 
+					pursuitScriptReferece.resumePursuit (); 
+					pathfindingScriptReferece.resumeGetPath (); 
 					//Debug.Log ("Found him");
 					break; 
 				}
@@ -74,12 +71,12 @@ public class Eye_Simulation : MonoBehaviour {
 	}
 
 
-	void resumeLookForPlayer(){
+	public void resumeLookForPlayer(){
 		//Debug.Log ("hey"); 
 		curretRoutine = null; 
 		curretRoutine = StartCoroutine (lookForPlayer ()); 
 	}
-	void pauseLookForPlayer(){
+	public void pauseLookForPlayer(){
 		//Debug.Log ("owwww"); 
 		if (curretRoutine != null) {
 			StopCoroutine (curretRoutine); 

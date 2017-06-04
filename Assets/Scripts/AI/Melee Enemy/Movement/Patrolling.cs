@@ -21,13 +21,6 @@ public class Patrolling : MonoBehaviour {
 		referencePathfinding = this.gameObject.GetComponent<PathFinding> ();
 	}
 
-	// Use this for initialization
-	void Start () {
-		Proximity_Sensing.sensingPlayer += pauseResturnToPatrolPosition; 
-		Proximity_Sensing.lostPlayer += resumeReturnToPatrolPosition;
-	}
-
-
 
 	IEnumerator returnToPatrolSpot(){
 		referencePathfinding.FindPath (this.transform.position, originalPosition); 
@@ -49,13 +42,13 @@ public class Patrolling : MonoBehaviour {
 	}
 
 
-	void resumeReturnToPatrolPosition(){
+	public void resumeReturnToPatrolPosition(){
 		currentRoutine = null; 
 		currentRoutine = StartCoroutine (returnToPatrolSpot ()); 
 
 	}
 
-	void pauseResturnToPatrolPosition(){
+	public void pauseResturnToPatrolPosition(){
 		if(currentRoutine!=null){
 			StopCoroutine (currentRoutine); 
 		}

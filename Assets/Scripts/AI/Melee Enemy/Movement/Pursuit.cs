@@ -29,11 +29,6 @@ public class Pursuit : MonoBehaviour {
 
 	}
 
-	void Start(){
-		Eye_Simulation.foundPlayer += resumePursuit; 
-		Proximity_Sensing.lostPlayer += pausePursuit; 
-	}
-
 	IEnumerator pursuit(){ 
 		while (true) { 
 			//right now it only looks at player. 
@@ -52,12 +47,12 @@ public class Pursuit : MonoBehaviour {
 			yield return new WaitForSeconds(0.04f); 
 		}
 	}
-	void resumePursuit(){
+	public void resumePursuit(){
 		currentRoutine = null; 
 		currentRoutine = StartCoroutine (pursuit ()); 
 	}
 		
-	void pausePursuit(){
+	public void pausePursuit(){
 
 		Debug.Log ("lost him"); 
 		if (currentRoutine != null) {

@@ -14,8 +14,6 @@ public class PathFinding : MonoBehaviour {
 
 	void Start(){
 		grid = GameObject.FindGameObjectWithTag ("PathFindingManager").GetComponent<Grid> ();
-		Eye_Simulation.foundPlayer += resumeGetPath; 
-		Proximity_Sensing.lostPlayer += pauseGetPath; 
 	} 
 
 	IEnumerator getPath(){
@@ -89,12 +87,12 @@ public class PathFinding : MonoBehaviour {
 	}
 
 
-	void resumeGetPath(){
+	public void resumeGetPath(){
 		currentRoutine = null; 
 		currentRoutine = StartCoroutine (getPath ()); 
 
 	}
-	void pauseGetPath(){
+	public void pauseGetPath(){
 		if (currentRoutine != null) {
 			StopCoroutine (currentRoutine); 
 		}

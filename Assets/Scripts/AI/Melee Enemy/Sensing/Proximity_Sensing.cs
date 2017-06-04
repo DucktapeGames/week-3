@@ -4,19 +4,35 @@ using UnityEngine;
 
 public class Proximity_Sensing : MonoBehaviour {
 	
-	//events
-	public delegate void PlayerDetection(); 
-	public static event PlayerDetection lostPlayer, sensingPlayer; 
+
+	//references
+	private Eye_Simulation eyeSimulationReference; 
+	private Pursuit pursuitScriptReferece; 
+	private PathFinding pathfindingScriptReferece; 
+	private Patrolling patrolScriptReferece; 
+
+
+	void Awake(){
+		eyeSimulationReference = this.gameObject.GetComponentInParent<Eye_Simulation> (); 
+		pursuitScriptReferece = this.gameObject.GetComponentInParent<Pursuit> (); 
+		pathfindingScriptReferece = GameObject.FindGameObjectWithTag ("PathFindingManger").GetComponent<PathFinding> ();
+		patrolScriptReferece = this.gameObject.GetComponentInParent<Patrolling> (); 
+	}
+
 
 	void OnTriggerEnter2D(Collider2D something){
 		if (something.tag == "Player") {
-			sensingPlayer (); 
+			eyeSimulationReference.resumeLookForPlayer (); 
+			patrolScriptReferece.pauseResturnToPatrolPosition (); 
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D something){
 		if (something.tag == "Player") {
-			lostPlayer (); 
+			eyeSimulationReference.pauseLookForPlayer (); 
+			pursuitScriptReferece.pausePursuit (); 
+			pathfindingScriptReferece.pauseGetPath ();
+			patrolScriptReferece.resumeReturnToPatrolPosition (); 
 		}
 	}
 
