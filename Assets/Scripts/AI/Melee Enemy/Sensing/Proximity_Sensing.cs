@@ -8,10 +8,6 @@ public class Proximity_Sensing : MonoBehaviour {
 	public delegate void PlayerDetection(); 
 	public static event PlayerDetection lostPlayer, sensingPlayer; 
 
-	void Start(){
-		
-	}
-
 	void OnTriggerEnter2D(Collider2D something){
 		if (something.tag == "Player") {
 			sensingPlayer (); 

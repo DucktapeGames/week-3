@@ -33,18 +33,19 @@ public class Eye_Simulation : MonoBehaviour {
 
 	  
 
-	void OnDrawGizmos(){
+	/*void OnDrawGizmos(){
 		Gizmos.color = Color.white; 
 		Gizmos.DrawWireSphere (body.position, viewRange * body.localScale.x); 
 		Gizmos.color = Color.blue; 
-		Gizmos.DrawLine (body.position, DirectionFromAngle (viewAngle)*viewRange * body.localScale.x);
+		Gizmos.DrawLine (body.position,body.position + DirectionFromAngle (viewAngle - (body.rotation.z*100))*viewRange * body.localScale.x);
+		Debug.Log (viewAngle + transform.rotation.z);
 		Gizmos.color = Color.blue; 
-		Gizmos.DrawLine (body.position, DirectionFromAngle (-viewAngle)*viewRange * body.localScale.x);
-	}
+		Gizmos.DrawLine (body.position,body.position + DirectionFromAngle (-viewAngle - (body.rotation.z*100))*viewRange * body.localScale.x);
+	} */
 
 
 	Vector3 DirectionFromAngle(float _angle){
-		return new Vector3 (Mathf.Sin ((_angle + 180 + transform.rotation.z) * Mathf.Deg2Rad), Mathf.Cos ((_angle + 180 + transform.rotation.z) * Mathf.Deg2Rad), 0); 
+		return new Vector3 (Mathf.Sin ((_angle + 180 ) * Mathf.Deg2Rad), Mathf.Cos ((_angle + 180 + transform.rotation.z) * Mathf.Deg2Rad), 0); 
 
 	}
 
@@ -56,14 +57,17 @@ public class Eye_Simulation : MonoBehaviour {
 	 */
 	public IEnumerator lookForPlayer(){
 		while (true) {
-			hit = Physics2D.Raycast (body.position, playerTrans.position, viewRange * body.localScale.x); 
+			//Debug.Log (playerTrans.position);
+			hit = Physics2D.Raycast (body.position, (playerTrans.position -body.position), viewRange * body.localScale.x ); 
 			if (hit) {
 				if (hit.transform.tag == "Player" && 
 					Vector2.Angle(new Vector2(-transform.up.x, -transform.up.y), new Vector2(playerTrans.position.x, playerTrans.position.y))<viewAngle) {
 					foundPlayer (); 
+					//Debug.Log ("Found him");
+					break; 
 				}
 			}
-			Debug.DrawRay (body.position, playerTrans.position, Color.red); 
+			//Debug.DrawRay (body.position, (playerTrans.position -body.position).normalized *viewRange * body.localScale.x , Color.red); 
 
 			yield return new WaitForSeconds (0.2f); 
 		} 
@@ -77,7 +81,9 @@ public class Eye_Simulation : MonoBehaviour {
 	}
 	void pauseLookForPlayer(){
 		//Debug.Log ("owwww"); 
-		StopCoroutine (curretRoutine); 
+		if (curretRoutine != null) {
+			StopCoroutine (curretRoutine); 
+		}
 	}
 
 }
