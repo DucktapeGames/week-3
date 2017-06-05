@@ -7,6 +7,8 @@ public class NavReferences : MonoBehaviour {
 	private Transform _target;
 	private Transform _target2D; 
 
+	[HideInInspector] 
+	public Vector3 OriginalPosition; 
 
 	public  Transform Target{
 		get{
@@ -40,7 +42,8 @@ public class NavReferences : MonoBehaviour {
 
 	void Awake(){
 		FoundTarget = false; 
-		this.gameObject.GetComponent<Proyection> ().Target.GetComponent<Eyes> ().agentReferences = this; 
+		this.gameObject.GetComponent<Proyection> ().Target.GetComponent<PathFinding> ().agentReferences = this; 
+		OriginalPosition = this.transform.position; 
 		_target2D = GameObject.FindGameObjectWithTag ("Player2D").GetComponent<Transform>();  
 
 

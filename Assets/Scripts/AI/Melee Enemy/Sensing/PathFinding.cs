@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine; 
 using UnityEngine.AI; 
 
-public class Eyes : MonoBehaviour {
+public class PathFinding : MonoBehaviour {
 
 	//public member variables
 	[HideInInspector]
@@ -12,17 +12,15 @@ public class Eyes : MonoBehaviour {
 			return ViewAngle * Mathf.Deg2Rad; 
 		}
 	}
+	[HideInInspector]
+	public NavReferences agentReferences; 
 
 	//private member variables
 	private Transform target; 
 	private NavMeshAgent agent;
-	public NavReferences agentReferences; 
-	private Coroutine currentRoutine; 
+	private Coroutine courSearch, courPursuit, courReturn; 
 	private bool playerInRange, playerSighted;  
-
-	void Awake(){
-		agent = agentReferences.GetComponent<NavMeshAgent> ();
-	}
+ 
 
 	//prefab customizable variables
 	[SerializeField][Range(0,10)]
@@ -34,13 +32,15 @@ public class Eyes : MonoBehaviour {
 	[SerializeField][Range(1,100)]
 	public float SensingQuality;
 	public LayerMask DetectionLayerMask; 
-	[SerializeField][Range(0,1)]
-	public float TargetOffsetDistance; 
 
+	void Awake(){
+		agent = agentReferences.GetComponent<NavMeshAgent> ();
+	}
 
 	void Start(){
-		
-		StartCoroutine (SenseForPlayer ()); 
+		courSearch = courPursuit = null; 
+		StartCoroutine (SenseForPlayer ());
+		ResumeSearch (); 
 	}
 		
 	public Vector2 DirFromAngle(float angleInDegrees, bool isGlobal){
@@ -53,13 +53,21 @@ public class Eyes : MonoBehaviour {
 
 	//checa si el player esta dentro del rango
 	IEnumerator SenseForPlayer(){
-		ResumeSearch (); 
 		while (true) {
 			if (Physics2D.OverlapCircle (this.transform.position, ViewRange, DetectionLayerMask)) {
 				playerInRange = true; 
+				Debug.Log ("Player in range"); 
 			} else {
 				playerInRange = false; 
-				playerSighted = false; 
+				playerSighted = false;
+			}
+			if (playerSighted && courPursuit == null) {
+				PauseSearch ();
+				ResumePursuit ();
+			} else if (!playerSighted && courPursuit != null) {
+				Debug.Log ("Hey");
+				PausePursuit (); 
+				ResumeSearch (); 
 			}
 			yield return new WaitForSeconds (2 / SensingQuality); 
 		}
@@ -67,37 +75,56 @@ public class Eyes : MonoBehaviour {
 
 	//checa si el player esta dentro del cono de vision
 	IEnumerator LookForPlayer(){
-		agentReferences.ResetReferenceTarget (); 
 		while (true) {
 			Debug.DrawLine (this.transform.position, agentReferences.Target2D.position, Color.white); 
-			if (Physics2D.Raycast (this.transform.position, agentReferences.Target2D.position, ViewRange, DetectionLayerMask) 
-				&& Vector2.Angle(this.transform.up, agentReferences.Target2D.position)<ViewAngle/2) {
-				//pursuit target agent.SetDestination (agentReferences.Target.position - ((agentReferences.Target.position - this.transform.position).normalized * TargetOffsetDistance)); 
-				playerSighted = true; 
+			if (Physics2D.Raycast (this.transform.position, agentReferences.Target2D.position - this.transform.position, ViewRange, DetectionLayerMask)){
+				Debug.Log (Vector2.Angle (this.transform.up, agentReferences.Target2D.position)); 
+				if (Vector2.Angle (this.transform.up, agentReferences.Target2D.position) < ViewAngle / 2) {
+					playerSighted = true; 
+				}
 			}
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
 	}
 
+	//asgina el destino del nav mesh 
 	IEnumerator PursuitPlayer(){
-		PauseSearch (); 
-
+		while (playerInRange) {
+			agent.SetDestination (agentReferences.Target.position);
+			yield return new WaitForSeconds (2 / SightUpdateQuality); 
+		}
+		yield return null; 
 	}
 
 
 
 	void ResumeSearch(){
 		Debug.Log ("Resuming search");
-		currentRoutine = null; 
-		currentRoutine = StartCoroutine (LookForPlayer ()); 
+		courSearch = null; 
+		courSearch = StartCoroutine (LookForPlayer ()); 
 	}
 
 	void PauseSearch(){ 
 		Debug.Log ("Pausing Search");
-		if (currentRoutine != null) {
-			StopCoroutine (currentRoutine);
+		if (courSearch != null) {
+			StopCoroutine (courSearch);
+			courSearch = null; 
 		}
 	}
+	void ResumePursuit(){
+		Debug.Log ("Resuming pursuit"); 
+		courPursuit = null;
+		courPursuit = StartCoroutine (PursuitPlayer ()); 
+	}
+	void PausePursuit(){
+		Debug.Log ("Pausing pursuit"); 
+		agent.SetDestination (agentReferences.OriginalPosition);
+		if (courPursuit != null) {
+			StopCoroutine (courPursuit);
+			courPursuit = null;
+		}
+	}
+		
 
 
 }

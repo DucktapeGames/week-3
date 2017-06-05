@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor; 
 
-[CustomEditor(typeof (Eyes))]
+[CustomEditor(typeof (PathFinding))]
 public class FOV : Editor {
 	private Proyection targetProyection;
 
 	void OnSceneGUI(){
-		Eyes fov = (Eyes)target; 
+		PathFinding fov = (PathFinding)target; 
 		Handles.color = Color.white; 
 		Handles.DrawWireArc (fov.transform.position, Vector3.forward, Vector3.up, 360, fov.ViewRange); 
 		Vector3 viewAngleA = fov.DirFromAngle (-fov.ViewAngle / 2, false); 
