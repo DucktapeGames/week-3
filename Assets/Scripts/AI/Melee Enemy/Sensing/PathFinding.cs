@@ -56,7 +56,7 @@ public class PathFinding : MonoBehaviour {
 		while (true) {
 			if (Physics2D.OverlapCircle (this.transform.position, ViewRange, DetectionLayerMask)) {
 				playerInRange = true; 
-				Debug.Log ("Player in range"); 
+				//Debug.Log ("Player in range"); 
 			} else {
 				playerInRange = false; 
 				playerSighted = false;
@@ -65,7 +65,6 @@ public class PathFinding : MonoBehaviour {
 				PauseSearch ();
 				ResumePursuit ();
 			} else if (!playerSighted && courPursuit != null) {
-				Debug.Log ("Hey");
 				PausePursuit (); 
 				ResumeSearch (); 
 			}
@@ -76,12 +75,15 @@ public class PathFinding : MonoBehaviour {
 	//checa si el player esta dentro del cono de vision
 	IEnumerator LookForPlayer(){
 		while (true) {
-			Debug.DrawLine (this.transform.position, agentReferences.Target2D.position, Color.white); 
+			//Debug.DrawLine (this.transform.position, agentReferences.Target2D.position, Color.white); 
 			if (Physics2D.Raycast (this.transform.position, agentReferences.Target2D.position - this.transform.position, ViewRange, DetectionLayerMask)){
-				Debug.Log (Vector2.Angle (this.transform.up, agentReferences.Target2D.position)); 
-				if (Vector2.Angle (this.transform.up, agentReferences.Target2D.position) < ViewAngle / 2) {
+				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position).normalized)); 
+				if (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position).normalized) < ViewAngle ) {
 					playerSighted = true; 
 				}
+			}
+			if (agent.remainingDistance == 0f) {
+				agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime); 
 			}
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
@@ -99,26 +101,28 @@ public class PathFinding : MonoBehaviour {
 
 
 	void ResumeSearch(){
-		Debug.Log ("Resuming search");
+		//Debug.Log ("Resuming search");
 		courSearch = null; 
 		courSearch = StartCoroutine (LookForPlayer ()); 
 	}
 
 	void PauseSearch(){ 
-		Debug.Log ("Pausing Search");
+		//Debug.Log ("Pausing Search");
 		if (courSearch != null) {
 			StopCoroutine (courSearch);
 			courSearch = null; 
 		}
 	}
 	void ResumePursuit(){
-		Debug.Log ("Resuming pursuit"); 
+		//Debug.Log ("Resuming pursuit"); 
+		agent.stoppingDistance = 2.5f; 
 		courPursuit = null;
 		courPursuit = StartCoroutine (PursuitPlayer ()); 
 	}
 	void PausePursuit(){
-		Debug.Log ("Pausing pursuit"); 
+		//Debug.Log ("Pausing pursuit"); 
 		agent.SetDestination (agentReferences.OriginalPosition);
+		agent.stoppingDistance = 0; 
 		if (courPursuit != null) {
 			StopCoroutine (courPursuit);
 			courPursuit = null;

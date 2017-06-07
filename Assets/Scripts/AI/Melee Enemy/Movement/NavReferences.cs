@@ -8,7 +8,9 @@ public class NavReferences : MonoBehaviour {
 	private Transform _target2D; 
 
 	[HideInInspector] 
-	public Vector3 OriginalPosition; 
+	public Vector3 OriginalPosition;
+	[HideInInspector]
+	public Quaternion OriginalRotation; 
 
 	public  Transform Target{
 		get{
@@ -44,6 +46,7 @@ public class NavReferences : MonoBehaviour {
 		FoundTarget = false; 
 		this.gameObject.GetComponent<Proyection> ().Target.GetComponent<PathFinding> ().agentReferences = this; 
 		OriginalPosition = this.transform.position; 
+		OriginalRotation = this.transform.rotation; 
 		_target2D = GameObject.FindGameObjectWithTag ("Player2D").GetComponent<Transform>();  
 
 
