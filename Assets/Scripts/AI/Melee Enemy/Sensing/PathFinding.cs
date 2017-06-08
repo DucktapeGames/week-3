@@ -31,7 +31,6 @@ public class PathFinding : MonoBehaviour {
 	[SerializeField][Range(1,100)]
 	public float SensingQuality;
 	public LayerMask DetectionLayerMask; 
-	[SerializeField][Range(0,100)]
 	public uint Damage; 
 
 	void Awake(){
