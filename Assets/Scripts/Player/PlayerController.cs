@@ -22,10 +22,10 @@ public class PlayerController : MonoBehaviour {
 			pos += Vector3.right;
 		}
 		if(Input.GetKey(KeyCode.W) && transform.position == pos) {        // Up
-			pos += Vector3.up;
+			pos += Vector3.forward;
 		}
 		if(Input.GetKey(KeyCode.S) && transform.position == pos) {        // Down
-			pos += Vector3.down;
+			pos += Vector3.back;
 		}
 		if (Input.GetKey(KeyCode.J)) {
 			CheckForHit();

@@ -475,6 +475,10 @@ GameObject:
   - component: {fileID: 821818992}
   - component: {fileID: 821818991}
   - component: {fileID: 821818995}
+  - component: {fileID: 821818996}
+  - component: {fileID: 821818999}
+  - component: {fileID: 821818998}
+  - component: {fileID: 821818997}
   m_Layer: 0
   m_Name: '3D Body: Dummy Player'
   m_TagString: Player
@@ -561,6 +565,55 @@ MonoBehaviour:
   Floor: {fileID: 1707502518}
   Static: 0
   Quality: 50
+--- !u!114 &821818996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 821818990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a1b20df41ed09944b90b98884e50395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+--- !u!114 &821818997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 821818990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2376da297c53c074699e84c4c069746b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalMana: 0
+  totalStamina: 0
+--- !u!114 &821818998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 821818990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad243bcdce97e54ea9cad1f9fad6dcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalHp: 100
+  hp: 100
+--- !u!114 &821818999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 821818990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c187be452618e4f8a1abab6552ba6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &848215636
 GameObject:
   m_ObjectHideFlags: 0
