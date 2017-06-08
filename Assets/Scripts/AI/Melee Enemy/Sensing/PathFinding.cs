@@ -16,10 +16,9 @@ public class PathFinding : MonoBehaviour {
 	public NavReferences agentReferences; 
 
 	//private member variables
-	private Transform target; 
 	private NavMeshAgent agent;
 	private Coroutine courSearch, courPursuit, courReturn; 
-	private bool playerInRange, playerSighted;  
+	private bool playerInRange, playerSighted, playerIsNotDead; 
  
 
 	//prefab customizable variables
@@ -32,15 +31,19 @@ public class PathFinding : MonoBehaviour {
 	[SerializeField][Range(1,100)]
 	public float SensingQuality;
 	public LayerMask DetectionLayerMask; 
+	[SerializeField][Range(0,100)]
+	public uint Damage; 
 
 	void Awake(){
 		agent = agentReferences.GetComponent<NavMeshAgent> ();
+		playerIsNotDead = true; 
 	}
 
 	void Start(){
 		courSearch = courPursuit = null; 
 		StartCoroutine (SenseForPlayer ());
 		ResumeSearch (); 
+		DamageableEntity.playerDied += ProtocolForWhenPlayerDied; 
 	}
 		
 	public Vector2 DirFromAngle(float angleInDegrees, bool isGlobal){
@@ -54,6 +57,9 @@ public class PathFinding : MonoBehaviour {
 	//checa si el player esta dentro del rango
 	IEnumerator SenseForPlayer(){
 		while (true) {
+			if (playerIsNotDead == false) {
+				break; 
+			}
 			if (Physics2D.OverlapCircle (this.transform.position, ViewRange, DetectionLayerMask)) {
 				playerInRange = true; 
 				//Debug.Log ("Player in range"); 
@@ -64,7 +70,7 @@ public class PathFinding : MonoBehaviour {
 			if (playerSighted && courPursuit == null) {
 				PauseSearch ();
 				ResumePursuit ();
-			} else if (!playerSighted && courPursuit != null) {
+			} else if ((!playerSighted && courPursuit != null)) {
 				PausePursuit (); 
 				ResumeSearch (); 
 			}
@@ -75,6 +81,9 @@ public class PathFinding : MonoBehaviour {
 	//checa si el player esta dentro del cono de vision
 	IEnumerator LookForPlayer(){
 		while (true) {
+			if (playerIsNotDead == false) {
+				break; 
+			}
 			//Debug.DrawLine (this.transform.position, agentReferences.Target2D.position, Color.white); 
 			if (Physics2D.Raycast (this.transform.position, agentReferences.Target2D.position - this.transform.position, ViewRange, DetectionLayerMask)){
 				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position).normalized)); 
@@ -92,6 +101,16 @@ public class PathFinding : MonoBehaviour {
 	//asgina el destino del nav mesh 
 	IEnumerator PursuitPlayer(){
 		while (playerInRange) {
+			if (playerIsNotDead == false) {
+				break; 
+			}
+			if (agent.remainingDistance < 2.5f) {
+				Debug.Log ("Attemping to damage player");
+				if (agentReferences.Target.gameObject.GetComponent<DamageableEntity> ()) {
+					agentReferences.Target.gameObject.GetComponent<DamageableEntity> ().Damage (Damage);
+					Debug.Log ("Damage Success");
+				}
+			}
 			agent.SetDestination (agentReferences.Target.position);
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
@@ -127,6 +146,12 @@ public class PathFinding : MonoBehaviour {
 			StopCoroutine (courPursuit);
 			courPursuit = null;
 		}
+	}
+
+
+	void ProtocolForWhenPlayerDied(){
+		playerIsNotDead = false; 
+		PausePursuit (); 
 	}
 		
 
