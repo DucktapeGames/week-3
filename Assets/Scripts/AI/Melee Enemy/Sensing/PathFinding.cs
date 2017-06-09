@@ -12,6 +12,8 @@ public class PathFinding : MonoBehaviour {
 			return ViewAngle * Mathf.Deg2Rad; 
 		}
 	}
+	[HideInInspector]
+	public bool moving; 
 
 	public NavReferences agentReferences; 
 
@@ -71,15 +73,17 @@ public class PathFinding : MonoBehaviour {
 		while (playerIsNotDead) {
 			if (Physics2D.Raycast (this.transform.position, (player.position - this.transform.position), ViewRange)){
 				hit = Physics2D.Raycast (this.transform.position, (player.position - this.transform.position), ViewRange);
-				Debug.Log (hit.collider.tag + hit.collider.gameObject.name );
+				//Debug.Log (hit.collider.tag + hit.collider.gameObject.name );
 				Debug.DrawLine (this.transform.position, new Vector3 (hit.point.x, hit.point.y, 0), Color.white); 
 				if (Vector3.Angle (this.transform.up, (player.position- this.transform.position))<(ViewAngle/2) && hit.collider.tag == "Player2D") {
+					moving = true; 
 					yield return StartCoroutine(PursuitPlayer()); 
 				}
 				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position)));
 			}
 			if (agent.remainingDistance == 0f) {
-				agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime); 
+				agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime);
+				moving = false; 
 			}
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
@@ -89,10 +93,7 @@ public class PathFinding : MonoBehaviour {
 	IEnumerator PursuitPlayer(){
 		agent.stoppingDistance = 2.5f; 
 		while (playerInRange && playerIsNotDead) {
-			if (playerIsNotDead == false) {
-				break; 
-			}
-			if (agent.remainingDistance < 2.5f) {
+			if (agent.remainingDistance < 2.5f && Vector3.Angle (this.transform.up, (player.position- this.transform.position))<(ViewAngle/2)) {
 				//Debug.Log ("Attemping to damage player");
 				if (agentReferences.Target.gameObject.GetComponent<DamageableEntity> ()) {
 					agentReferences.Target.gameObject.GetComponent<DamageableEntity> ().Damage (Damage);

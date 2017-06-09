@@ -134,10 +134,7 @@ MonoBehaviour:
   DetectionLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  BlockDetectionLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  Damage: 1
+  Damage: 3
 --- !u!212 &212031214430956808
 SpriteRenderer:
   m_ObjectHideFlags: 1
