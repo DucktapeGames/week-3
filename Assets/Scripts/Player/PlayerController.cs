@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
          maxSpeed = curSpeed;
  
          // Move senteces
-        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal")* curSpeed, 0.8f),
+		GetComponent<Rigidbody>().velocity = new Vector3(Mathf.Lerp(0, Input.GetAxis("Horizontal")* curSpeed, 0.8f),0,
                                                 Mathf.Lerp(0, Input.GetAxis("Vertical")* curSpeed, 0.8f));
  }
 	

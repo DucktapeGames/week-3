@@ -19,6 +19,8 @@ public class PathFinding : MonoBehaviour {
 	private NavMeshAgent agent;
 	private Coroutine courSearch, courPursuit, courReturn; 
 	private bool playerInRange, playerSighted, playerIsNotDead; 
+	private RaycastHit2D hit; 
+	private  Collider2D hitInrage; 
  
 
 	//prefab customizable variables
@@ -61,7 +63,7 @@ public class PathFinding : MonoBehaviour {
 			}
 			if (Physics2D.OverlapCircle (this.transform.position, ViewRange, DetectionLayerMask)) {
 				playerInRange = true; 
-				//Debug.Log ("Player in range"); 
+				Debug.Log ("Player in range"); 
 			} else {
 				playerInRange = false; 
 				playerSighted = false;
@@ -83,10 +85,10 @@ public class PathFinding : MonoBehaviour {
 			if (playerIsNotDead == false) {
 				break; 
 			}
-			//Debug.DrawLine (this.transform.position, agentReferences.Target2D.position, Color.white); 
-			if (Physics2D.Raycast (this.transform.position, agentReferences.Target2D.position - this.transform.position, ViewRange, DetectionLayerMask)){
-				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position).normalized)); 
-				if (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position).normalized) < ViewAngle ) {
+			Debug.DrawLine (this.transform.position, (agentReferences.Target2D.position - this.transform.position) * ViewRange, Color.white); 
+			if (hit = Physics2D.Raycast (this.transform.position, (agentReferences.Target2D.position - this.transform.position), ViewRange)){
+				Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position))<(ViewAngle/2)); 
+				if (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position).normalized)<(ViewAngle/2) && hit.collider.gameObject.tag == "Player2D" ) {
 					playerSighted = true; 
 				}
 			}
@@ -104,10 +106,10 @@ public class PathFinding : MonoBehaviour {
 				break; 
 			}
 			if (agent.remainingDistance < 2.5f) {
-				Debug.Log ("Attemping to damage player");
+				//Debug.Log ("Attemping to damage player");
 				if (agentReferences.Target.gameObject.GetComponent<DamageableEntity> ()) {
 					agentReferences.Target.gameObject.GetComponent<DamageableEntity> ().Damage (Damage);
-					Debug.Log ("Damage Success");
+					//Debug.Log ("Damage Success");
 				}
 			}
 			agent.SetDestination (agentReferences.Target.position);
