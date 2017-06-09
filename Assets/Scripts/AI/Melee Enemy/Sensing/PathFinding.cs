@@ -12,13 +12,14 @@ public class PathFinding : MonoBehaviour {
 			return ViewAngle * Mathf.Deg2Rad; 
 		}
 	}
-	[HideInInspector]
+
 	public NavReferences agentReferences; 
 
 	//private member variables
 	private NavMeshAgent agent;
-	private Coroutine courSearch, courPursuit, courReturn; 
-	private bool playerInRange, playerSighted, playerIsNotDead; 
+	private bool playerInRange, playerIsNotDead; 
+	private RaycastHit2D hit; 
+	private Transform player;
  
 
 	//prefab customizable variables
@@ -31,18 +32,17 @@ public class PathFinding : MonoBehaviour {
 	[SerializeField][Range(1,100)]
 	public float SensingQuality;
 	public LayerMask DetectionLayerMask; 
-	public LayerMask BlockDetectionLayer; 
 	public uint Damage; 
 
 	void Awake(){
-		agent = agentReferences.GetComponent<NavMeshAgent> ();
+		agent = agentReferences.gameObject.GetComponent<NavMeshAgent> (); 
+		player = GameObject.FindGameObjectWithTag ("Player2D").transform; 
 		playerIsNotDead = true; 
 	}
 
 	void Start(){
-		courSearch = courPursuit = null; 
 		StartCoroutine (SenseForPlayer ());
-		ResumeSearch (); 
+		StartCoroutine (LookForPlayer ()); 
 		DamageableEntity.playerDied += ProtocolForWhenPlayerDied; 
 	}
 		
@@ -56,23 +56,11 @@ public class PathFinding : MonoBehaviour {
 
 	//checa si el player esta dentro del rango
 	IEnumerator SenseForPlayer(){
-		while (true) {
-			if (playerIsNotDead == false) {
-				break; 
-			}
+		while (playerIsNotDead) {
 			if (Physics2D.OverlapCircle (this.transform.position, ViewRange, DetectionLayerMask)) {
 				playerInRange = true; 
-				Debug.Log ("Player in range"); 
 			} else {
 				playerInRange = false; 
-				playerSighted = false;
-			}
-			if (playerSighted && courPursuit == null) {
-				PauseSearch ();
-				ResumePursuit ();
-			} else if ((!playerSighted && courPursuit != null)) {
-				PausePursuit (); 
-				ResumeSearch (); 
 			}
 			yield return new WaitForSeconds (2 / SensingQuality); 
 		}
@@ -80,17 +68,13 @@ public class PathFinding : MonoBehaviour {
 
 	//checa si el player esta dentro del cono de vision
 	IEnumerator LookForPlayer(){
-		while (true) {
-			if (playerIsNotDead == false) {
-				break; 
-			}
-			//Debug.DrawLine (this.transform.position, (agentReferences.Target2D.position - this.transform.position).normalized, Color.white); 
-			if (Physics2D.Raycast (this.transform.position, (agentReferences.Target2D.position - this.transform.position), ViewRange, DetectionLayerMask)
-				&& !Physics2D.Raycast (this.transform.position, (agentReferences.Target2D.position - this.transform.position), ViewRange, BlockDetectionLayer)){
-				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position).normalized)<(ViewAngle/2)); 
-				//Debug.Log("Hey");
-				if (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position))<(ViewAngle/2) && Vector2.Distance(this.transform.position, agentReferences.Target2D.position)<ViewRange*2) {
-					playerSighted = true; 
+		while (playerIsNotDead) {
+			if (Physics2D.Raycast (this.transform.position, (player.position - this.transform.position), ViewRange)){
+				hit = Physics2D.Raycast (this.transform.position, (player.position - this.transform.position), ViewRange);
+				Debug.Log (hit.collider.tag + hit.collider.gameObject.name );
+				Debug.DrawLine (this.transform.position, new Vector3 (hit.point.x, hit.point.y, 0), Color.white); 
+				if (Vector3.Angle (this.transform.up, (player.position- this.transform.position))<(ViewAngle/2) && hit.collider.tag == "Player2D") {
+					yield return StartCoroutine(PursuitPlayer()); 
 				}
 				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position)));
 			}
@@ -103,7 +87,8 @@ public class PathFinding : MonoBehaviour {
 
 	//asgina el destino del nav mesh 
 	IEnumerator PursuitPlayer(){
-		while (playerInRange) {
+		agent.stoppingDistance = 2.5f; 
+		while (playerInRange && playerIsNotDead) {
 			if (playerIsNotDead == false) {
 				break; 
 			}
@@ -117,44 +102,13 @@ public class PathFinding : MonoBehaviour {
 			agent.SetDestination (agentReferences.Target.position);
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
-		yield return null; 
-	}
-
-
-
-	void ResumeSearch(){
-		//Debug.Log ("Resuming search");
-		courSearch = null; 
-		courSearch = StartCoroutine (LookForPlayer ()); 
-	}
-
-	void PauseSearch(){ 
-		//Debug.Log ("Pausing Search");
-		if (courSearch != null) {
-			StopCoroutine (courSearch);
-			courSearch = null; 
-		}
-	}
-	void ResumePursuit(){
-		//Debug.Log ("Resuming pursuit"); 
-		agent.stoppingDistance = 2.5f; 
-		courPursuit = null;
-		courPursuit = StartCoroutine (PursuitPlayer ()); 
-	}
-	void PausePursuit(){
-		//Debug.Log ("Pausing pursuit"); 
 		agent.SetDestination (agentReferences.OriginalPosition);
 		agent.stoppingDistance = 0; 
-		if (courPursuit != null) {
-			StopCoroutine (courPursuit);
-			courPursuit = null;
-		}
+		yield return null; 
 	}
-
-
+		
 	void ProtocolForWhenPlayerDied(){
 		playerIsNotDead = false; 
-		PausePursuit (); 
 	}
 		
 

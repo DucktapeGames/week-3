@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4578706241841036}
   - component: {fileID: 58561703302281306}
   - component: {fileID: 114405184932853962}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: 2D Body_ Melee Enemy 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4644588919442580}
   - component: {fileID: 212031214430956808}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4152843338694300}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,13 +93,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637258382151636}
-  m_LocalRotation: {x: 0, y: 0, z: 0.99904823, w: 0.0436195}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 4578706241841036}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 175}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!58 &58561703302281306
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -127,9 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentReferences: {fileID: 0}
-  ViewRange: 10
-  ViewAngle: 55
-  SightUpdateQuality: 50
+  ViewRange: 7.86
+  ViewAngle: 25
+  SightUpdateQuality: 25
   SensingQuality: 25
   DetectionLayerMask:
     serializedVersion: 2

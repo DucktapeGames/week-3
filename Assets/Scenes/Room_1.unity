@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 138913514}
   - component: {fileID: 138913515}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,6 +257,12 @@ SpriteRenderer:
   m_Size: {x: 7, y: 7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &217561397 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114679063527406386, guid: b4d7317b29fc64c6c95e6270e799b96d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1090899739}
+  m_Script: {fileID: 11500000, guid: fb2ece9f482be41369cd52ae6a09b79a, type: 3}
 --- !u!1 &230333562
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 230333563}
   - component: {fileID: 230333564}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 385924406}
   - component: {fileID: 385924407}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1001,7 +1007,7 @@ Prefab:
         type: 2}
       propertyPath: agentReferences
       value: 
-      objectReference: {fileID: 1459155052}
+      objectReference: {fileID: 217561397}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5640ddc8add94982a837e704e0d8223, type: 2}
   m_IsPrefabParent: 0
@@ -1259,7 +1265,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.13
+      value: -6.66
       objectReference: {fileID: 0}
     - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1267,7 +1273,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 25.91
+      value: 27.01
       objectReference: {fileID: 0}
     - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1545,6 +1551,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 445.6
       objectReference: {fileID: 0}
+    - target: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
   m_IsPrefabParent: 0
@@ -1592,6 +1602,10 @@ Prefab:
       propertyPath: agentReferences
       value: 
       objectReference: {fileID: 1459155052}
+    - target: {fileID: 1782940474953768, guid: b1a36d7ed9206487bbfc5390e8d21e93, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1a36d7ed9206487bbfc5390e8d21e93, type: 2}
   m_IsPrefabParent: 0
@@ -1604,7 +1618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1363651064}
   - component: {fileID: 1363651065}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1658,7 +1672,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1387888872}
   - component: {fileID: 1387888873}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1755,7 +1769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1489560071}
   - component: {fileID: 1489560072}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2216,7 +2230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1604537330}
   - component: {fileID: 1604537331}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

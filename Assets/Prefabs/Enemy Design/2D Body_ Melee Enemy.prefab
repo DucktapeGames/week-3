@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4985483781301242}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4315419792124498}
   - component: {fileID: 58437913241520762}
   - component: {fileID: 114330545731200916}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: 2D Body_ Melee Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4495019049621164}
   - component: {fileID: 212351267600239144}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,13 +80,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1854082188192108}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7660445, w: 0.64278764}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 4315419792124498}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -100}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!4 &4985483781301242
 Transform:
   m_ObjectHideFlags: 1
@@ -128,8 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentReferences: {fileID: 0}
   ViewRange: 4.97
-  ViewAngle: 284
-  SightUpdateQuality: 50
+  ViewAngle: 180
+  SightUpdateQuality: 40
   SensingQuality: 25
   DetectionLayerMask:
     serializedVersion: 2
