@@ -20,6 +20,7 @@ public class Chasing : MonoBehaviour {
 	IEnumerator animate(){
 		while (true) {
 			anim.SetBool ("moving", pathfinding.moving); 
+			anim.SetBool ("attacking", pathfinding.attacking); 
 			yield return new WaitForSeconds (0.2f); 
 		}
 	}

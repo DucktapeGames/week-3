@@ -13,7 +13,7 @@ public class PathFinding : MonoBehaviour {
 		}
 	}
 	[HideInInspector]
-	public bool moving; 
+	public bool moving, attacking;  
 
 	public NavReferences agentReferences; 
 
@@ -91,16 +91,18 @@ public class PathFinding : MonoBehaviour {
 
 	//asgina el destino del nav mesh 
 	IEnumerator PursuitPlayer(){
-		agent.stoppingDistance = 2.5f; 
+		agent.stoppingDistance = 1.5f; 
 		while (playerInRange && playerIsNotDead) {
-			if (agent.remainingDistance < 2.5f && Vector3.Angle (this.transform.up, (player.position- this.transform.position))<(ViewAngle/2)) {
+			agent.SetDestination (agentReferences.Target.position);
+			if (agent.remainingDistance < 2.5f && Vector3.Angle (this.transform.up, (player.position - this.transform.position)) < (ViewAngle / 2)) {
 				//Debug.Log ("Attemping to damage player");
 				if (agentReferences.Target.gameObject.GetComponent<DamageableEntity> ()) {
 					agentReferences.Target.gameObject.GetComponent<DamageableEntity> ().Damage (Damage);
-					//Debug.Log ("Damage Success");
+					attacking = true; 
 				}
+			} else {
+				attacking = false; 
 			}
-			agent.SetDestination (agentReferences.Target.position);
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
 		agent.SetDestination (agentReferences.OriginalPosition);
@@ -110,6 +112,9 @@ public class PathFinding : MonoBehaviour {
 		
 	void ProtocolForWhenPlayerDied(){
 		playerIsNotDead = false; 
+		attacking = false; 
+		moving = true; 
+
 	}
 		
 

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour {
 
 	private float walkSpeed;
      private float curSpeed;
-     private float maxSpeed;
+     //private float maxSpeed;
  
      public float speed;
 	 public float agility;
@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour {
      void Start()
      {
          walkSpeed = (float)(speed + (agility/5));
-         maxSpeed = walkSpeed + (walkSpeed / 2);
+        // maxSpeed = walkSpeed + (walkSpeed / 2);
      }
  
      void FixedUpdate()
      {
          curSpeed = walkSpeed;
-         maxSpeed = curSpeed;
+         //maxSpeed = curSpeed;
  
          // Move senteces
 		GetComponent<Rigidbody>().velocity = new Vector3(Mathf.Lerp(0, Input.GetAxis("Horizontal")* curSpeed, 0.8f),0,
