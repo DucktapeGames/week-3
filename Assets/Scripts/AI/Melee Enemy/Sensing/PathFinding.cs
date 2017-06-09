@@ -19,8 +19,6 @@ public class PathFinding : MonoBehaviour {
 	private NavMeshAgent agent;
 	private Coroutine courSearch, courPursuit, courReturn; 
 	private bool playerInRange, playerSighted, playerIsNotDead; 
-	private RaycastHit2D hit; 
-	private  Collider2D hitInrage; 
  
 
 	//prefab customizable variables
@@ -33,6 +31,7 @@ public class PathFinding : MonoBehaviour {
 	[SerializeField][Range(1,100)]
 	public float SensingQuality;
 	public LayerMask DetectionLayerMask; 
+	public LayerMask BlockDetectionLayer; 
 	public uint Damage; 
 
 	void Awake(){
@@ -85,12 +84,15 @@ public class PathFinding : MonoBehaviour {
 			if (playerIsNotDead == false) {
 				break; 
 			}
-			Debug.DrawLine (this.transform.position, (agentReferences.Target2D.position - this.transform.position) * ViewRange, Color.white); 
-			if (hit = Physics2D.Raycast (this.transform.position, (agentReferences.Target2D.position - this.transform.position), ViewRange)){
-				Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position))<(ViewAngle/2)); 
-				if (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position).normalized)<(ViewAngle/2) && hit.collider.gameObject.tag == "Player2D" ) {
+			//Debug.DrawLine (this.transform.position, (agentReferences.Target2D.position - this.transform.position).normalized, Color.white); 
+			if (Physics2D.Raycast (this.transform.position, (agentReferences.Target2D.position - this.transform.position), ViewRange, DetectionLayerMask)
+				&& !Physics2D.Raycast (this.transform.position, (agentReferences.Target2D.position - this.transform.position), ViewRange, BlockDetectionLayer)){
+				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position).normalized)<(ViewAngle/2)); 
+				//Debug.Log("Hey");
+				if (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position- this.transform.position))<(ViewAngle/2) && Vector2.Distance(this.transform.position, agentReferences.Target2D.position)<ViewRange*2) {
 					playerSighted = true; 
 				}
+				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position)));
 			}
 			if (agent.remainingDistance == 0f) {
 				agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime); 
