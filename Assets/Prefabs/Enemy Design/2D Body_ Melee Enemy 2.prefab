@@ -93,13 +93,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637258382151636}
-  m_LocalRotation: {x: 0, y: -0, z: 0.9961947, w: -0.08715578}
+  m_LocalRotation: {x: 0, y: 0, z: 0.99904823, w: 0.0436195}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 4578706241841036}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 190}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 175}
 --- !u!58 &58561703302281306
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentReferences: {fileID: 0}
   ViewRange: 10
-  ViewAngle: 62
+  ViewAngle: 55
   SightUpdateQuality: 50
   SensingQuality: 25
   DetectionLayerMask:
