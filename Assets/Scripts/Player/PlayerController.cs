@@ -4,35 +4,29 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	// Use this for initialization
-	Vector3 pos;                                // For movement
-	public float speed;                         // Speed of movement
-	Vector3 moveDirection;
-	float angle;
-		
-	void Start () {
-		pos = transform.position;          // Take the initial position
-	}
-
-	void FixedUpdate () {
-		if(Input.GetKey(KeyCode.A) && transform.position == pos) {        // Left
-			pos += Vector3.left;
-		}
-		if(Input.GetKey(KeyCode.D) && transform.position == pos) {        // Right
-			pos += Vector3.right;
-		}
-		if(Input.GetKey(KeyCode.W) && transform.position == pos) {        // Up
-			pos += Vector3.forward;
-		}
-		if(Input.GetKey(KeyCode.S) && transform.position == pos) {        // Down
-			pos += Vector3.back;
-		}
-		if (Input.GetKey(KeyCode.J)) {
-			CheckForHit();
-		}
-		transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);    // Move there
-	}
-
+	private float walkSpeed;
+     private float curSpeed;
+     private float maxSpeed;
+ 
+     public float speed;
+	 public float agility;
+ 
+     void Start()
+     {
+         walkSpeed = (float)(speed + (agility/5));
+         maxSpeed = walkSpeed + (walkSpeed / 2);
+     }
+ 
+     void FixedUpdate()
+     {
+         curSpeed = walkSpeed;
+         maxSpeed = curSpeed;
+ 
+         // Move senteces
+        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal")* curSpeed, 0.8f),
+                                                Mathf.Lerp(0, Input.GetAxis("Vertical")* curSpeed, 0.8f));
+ }
+	
 	void CheckForHit() {
 		RaycastHit objectHit;
 
@@ -45,15 +39,6 @@ public class PlayerController : MonoBehaviour {
 				Damageable dmg = objectHit.transform.gameObject.GetComponent<Damageable>();
 				dmg.Damage(10);
 			}
-		}
-	}
-
-	void Update() {
-		moveDirection = gameObject.transform.position - pos; 
-		if (moveDirection != Vector3.zero) 
-		{
-			angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg + 90.0f;
-			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
 	}
 }
