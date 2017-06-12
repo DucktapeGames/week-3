@@ -14,24 +14,27 @@ public class PlayerController : MonoBehaviour {
 	public float attackDelay; 
 	private float time; 
 	private Rigidbody rbody;
-	private Animator anim; 
+	private Animator anim;
+
+	bool moving;
 
 	private RotateToCursor rotateScript; 
 
-	void Awake(){
+	void Awake() {
 		rotateScript = this.gameObject.GetComponent<RotateToCursor> (); 
 		rbody = this.gameObject.GetComponent<Rigidbody> (); 
-		anim = GameObject.FindGameObjectWithTag ("Player2D").GetComponent<Animator>(); 
+		anim = GameObject.FindGameObjectWithTag ("Player2D").GetComponent<Animator>();
 	}
  
      void Start()
      {
 		time = 0; 
-         walkSpeed = (float)(speed + (agility/5));
+        walkSpeed = (float)(speed + (agility/5));
+		moving = false;
         // maxSpeed = walkSpeed + (walkSpeed / 2);
      }
 
-	void Update(){
+	void Update() {
 		if (time <= attackDelay) {
 			time += Time.fixedDeltaTime; 
 		} else {
@@ -45,8 +48,27 @@ public class PlayerController : MonoBehaviour {
          //maxSpeed = curSpeed;
  
          // Move senteces
-		rbody.velocity = (Mathf.Lerp(0, Input.GetAxis("Horizontal")* curSpeed, 0.8f) * Vector3.Cross(Vector3.up, rotateScript.Direction.normalized))+ 
-			(Mathf.Lerp(0, Input.GetAxis("Vertical")* curSpeed, 0.8f) * rotateScript.Direction.normalized);
+		if(Input.GetKey(KeyCode.W)) {
+			transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+			moving = true;
+		}
+		if(Input.GetKey(KeyCode.A)) {
+			transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
+			moving = true;
+		}
+		if(Input.GetKey(KeyCode.S)) {
+			transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
+			moving = true;
+		}
+		if(Input.GetKey(KeyCode.D)) {
+			transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
+			moving = true;
+		}
+
+		if(Input.GetKey(KeyCode.W) != true && Input.GetKey(KeyCode.A) != true && Input.GetKey(KeyCode.S) != true && Input.GetKey(KeyCode.D) != true) {
+			moving = false;
+		}
+
 		if (Input.GetKeyDown(KeyCode.Mouse0) && time >= attackDelay) {
 			CheckForHit (); 
 			time = 0; 
