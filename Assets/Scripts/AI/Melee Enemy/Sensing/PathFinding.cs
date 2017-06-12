@@ -97,7 +97,7 @@ public class PathFinding : MonoBehaviour {
 		}
 		while (playerInRange && playerIsNotDead && agentReferences != null) {
 			agent.SetDestination (agentReferences.Target.position);
-			if (agent.remainingDistance < 1f && Vector3.Angle (this.transform.up, (player.position - this.transform.position)) < (ViewAngle / 2)) {
+			if (agent.remainingDistance < 1.5f && Vector3.Angle (this.transform.up, (player.position - this.transform.position)) < (ViewAngle / 2)) {
 				//Debug.Log ("Attemping to damage player");
 				if (agentReferences.Target.gameObject.GetComponent<DamageableEntity> ()) {
 					agentReferences.Target.gameObject.GetComponent<DamageableEntity> ().Damage (Damage);

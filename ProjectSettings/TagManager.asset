@@ -11,6 +11,9 @@ TagManager:
   - Stamina
   - Projectile
   - Player2D
+  - Door
+  - Key
+  - Door2D
   layers:
   - Default
   - TransparentFX
