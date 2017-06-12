@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour {
 			//do something if hit object ie
 			if(objectHit.transform.gameObject.tag == "Container") {
 				Damageable dmg = objectHit.transform.gameObject.GetComponent<Damageable>();
-				dmg.Damage(10);
+				dmg.Damage(30);
 			}
 		}
 	}

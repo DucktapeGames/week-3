@@ -13,9 +13,13 @@ public class Door : MonoBehaviour {
 	}
 
 	public void Open(){
-		door2d.sprite = OpenedDoorSprite; 
+		if (door2d != null) {
+			door2d.sprite = OpenedDoorSprite; 
+		}	
 		Destroy (this.gameObject); 
 	}
+
+
 
 
 
