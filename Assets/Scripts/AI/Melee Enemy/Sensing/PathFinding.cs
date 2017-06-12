@@ -22,7 +22,7 @@ public class PathFinding : MonoBehaviour {
 	private bool playerInRange, playerIsNotDead; 
 	private RaycastHit2D hit; 
 	private Transform player;
- 
+	private Coroutine Sensing, Looking; 
 
 	//prefab customizable variables
 	[SerializeField][Range(0,10)]
@@ -43,8 +43,8 @@ public class PathFinding : MonoBehaviour {
 	}
 
 	void Start(){
-		StartCoroutine (SenseForPlayer ());
-		StartCoroutine (LookForPlayer ()); 
+		Sensing = StartCoroutine (SenseForPlayer ());
+		Looking = StartCoroutine (LookForPlayer ()); 
 		DamageableEntity.playerDied += ProtocolForWhenPlayerDied; 
 	}
 		
@@ -81,10 +81,13 @@ public class PathFinding : MonoBehaviour {
 				}
 				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position)));
 			}
-			if (agent.remainingDistance == 0f) {
-				agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime);
-				moving = false; 
+			if (agentReferences != null) {
+				if (agent.remainingDistance == 0f) {
+					agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime);
+					moving = false; 
+				}
 			}
+
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
 	}
@@ -115,6 +118,11 @@ public class PathFinding : MonoBehaviour {
 		attacking = false; 
 		moving = true; 
 
+	}
+
+	void OnDisable(){
+		StopCoroutine (Sensing); 
+		StopCoroutine (Looking); 
 	}
 		
 

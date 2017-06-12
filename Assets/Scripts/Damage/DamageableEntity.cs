@@ -7,14 +7,25 @@ public class DamageableEntity : MonoBehaviour {
 	public uint totalHp;
     public uint hp;
 	Damageable dmg;
+	private Rigidbody rbody; 
 
-	private GameObject player2d; 
+	public bool isPlayer; 
+	private SpriteRenderer spriteRender; 
+	private GameObject target2D; 
+	public Sprite DeadSprite; 
 
 	public delegate void DeathEvents();
 	public static event DeathEvents playerDied; 
 
 	void Awake(){
-		player2d = GameObject.FindGameObjectWithTag ("Player2D"); 
+		if (isPlayer) {
+			target2D = GameObject.FindGameObjectWithTag ("Player2D"); 
+			spriteRender = target2D.GetComponent<SpriteRenderer> ();
+		} else {
+			spriteRender = this.GetComponent<Proyection> ().Target.gameObject.GetComponentInChildren<SpriteRenderer> (); 
+			target2D = this.GetComponent<Proyection> ().Target.gameObject; 
+		}
+
 	}
 
     // Use this for initialization
@@ -35,14 +46,26 @@ public class DamageableEntity : MonoBehaviour {
     }
 
 	IEnumerator Die() {
-		playerDied (); 
         if(gameObject.tag == "Container") {
-            Spawner spawner = GetComponent<Spawner>();
-            spawner.Spawn();
+            //Spawner spawner = GetComponent<Spawner>();
+            //spawner.Spawn();
         }
-        //Destroy(gameObject);
+		if (isPlayer) {
+			playerDied (); 
+			target2D.GetComponent<Animator> ().enabled = false; 
+			spriteRender.sprite = DeadSprite; 
+			Destroy (this.gameObject); 
+		} else {
+			target2D.GetComponentInChildren<Animator> ().enabled = false; 
+			target2D.GetComponent<Chasing> ().enabled = false; 
+			target2D.GetComponent<PathFinding> ().enabled = false; 
+			target2D.GetComponent<Chasing> ().enabled = false; 
+			spriteRender.sprite = DeadSprite; 
+			Destroy (this.gameObject); 
+		}
 		yield return new WaitForSeconds(1f); 
-		player2d.SetActive (false); 
+
+
     }
 
 	void DoDie(){

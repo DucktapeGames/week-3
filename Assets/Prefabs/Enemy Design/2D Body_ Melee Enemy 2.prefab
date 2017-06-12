@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4578706241841036}
   - component: {fileID: 58561703302281306}
   - component: {fileID: 114405184932853962}
+  - component: {fileID: 114101133569522296}
   m_Layer: 2
   m_Name: 2D Body_ Melee Enemy 2
   m_TagString: Untagged
@@ -37,6 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4644588919442580}
   - component: {fileID: 212031214430956808}
+  - component: {fileID: 95210998911876666}
   m_Layer: 2
   m_Name: Graphics
   m_TagString: Untagged
@@ -79,7 +81,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1425599589268806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.43, y: 2.52, z: 0}
+  m_LocalPosition: {x: 11.87, y: 2.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4644588919442580}
@@ -115,6 +117,34 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.77
+--- !u!95 &95210998911876666
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1637258382151636}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4757494346997462db76b953f4f186a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114101133569522296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425599589268806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f917e3272faac446d993342446a7b9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114405184932853962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,6 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10930fdc914f4e82881635eeed15524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moving: 0
+  attacking: 0
   agentReferences: {fileID: 0}
   ViewRange: 7.86
   ViewAngle: 25

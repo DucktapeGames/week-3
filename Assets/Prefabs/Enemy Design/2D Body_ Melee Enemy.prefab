@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4315419792124498}
   - component: {fileID: 58437913241520762}
   - component: {fileID: 114330545731200916}
+  - component: {fileID: 114589503264420392}
   m_Layer: 2
   m_Name: 2D Body_ Melee Enemy
   m_TagString: Untagged
@@ -144,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10930fdc914f4e82881635eeed15524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moving: 0
+  attacking: 0
   agentReferences: {fileID: 0}
   ViewRange: 4.97
   ViewAngle: 180
@@ -153,6 +156,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   Damage: 1
+--- !u!114 &114589503264420392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1782940474953768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f917e3272faac446d993342446a7b9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212351267600239144
 SpriteRenderer:
   m_ObjectHideFlags: 1
