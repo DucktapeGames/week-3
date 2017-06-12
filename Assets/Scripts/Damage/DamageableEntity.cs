@@ -18,6 +18,7 @@ public class DamageableEntity : MonoBehaviour {
 	public static event DeathEvents playerDied; 
 
 	void Awake(){
+		rbody = this.GetComponent<Rigidbody> (); 
 		if (isPlayer) {
 			target2D = GameObject.FindGameObjectWithTag ("Player2D"); 
 			spriteRender = target2D.GetComponent<SpriteRenderer> ();
@@ -42,6 +43,7 @@ public class DamageableEntity : MonoBehaviour {
         } 
 		else {
             hp -= amount;
+			rbody.AddExplosionForce (100, this.transform.position + this.transform.forward, 1f); 
         }
     }
 

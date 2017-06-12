@@ -838,37 +838,6 @@ SpriteRenderer:
   m_Size: {x: 16.277344, y: 16.28125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
---- !u!1 &1002654030 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1090899739}
---- !u!114 &1002654031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1002654030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fad243bcdce97e54ea9cad1f9fad6dcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalHp: 100
-  hp: 100
-  isPlayer: 0
-  DeadSprite: {fileID: 21300000, guid: 879393cdec3a147978eaf0f2b7b8c358, type: 3}
---- !u!114 &1002654032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1002654030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c187be452618e4f8a1abab6552ba6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1005228093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,10 +1041,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_Name
-      value: 3D Body_ Enemy (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 114035214460128274, guid: b4d7317b29fc64c6c95e6270e799b96d,
         type: 2}
       propertyPath: Target
@@ -1086,31 +1051,19 @@ Prefab:
       propertyPath: Floor
       value: 
       objectReference: {fileID: 1707502518}
-    - target: {fileID: 195732027888010342, guid: b4d7317b29fc64c6c95e6270e799b96d,
-        type: 2}
-      propertyPath: m_Speed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 195732027888010342, guid: b4d7317b29fc64c6c95e6270e799b96d,
-        type: 2}
-      propertyPath: m_Radius
-      value: 0.35
-      objectReference: {fileID: 0}
     - target: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_TagString
-      value: Container
+      propertyPath: m_Name
+      value: 3D Body_ Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 54462729526222586, guid: b4d7317b29fc64c6c95e6270e799b96d,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 54462729526222586, guid: b4d7317b29fc64c6c95e6270e799b96d,
+        type: 2}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
@@ -1328,19 +1281,25 @@ Prefab:
       propertyPath: Floor
       value: 
       objectReference: {fileID: 1707502518}
-    - target: {fileID: 4229652810932178, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+    - target: {fileID: 114927119615308570, guid: b4d7317b29fc64c6c95e6270e799b96d,
+        type: 2}
+      propertyPath: DeadSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5c242ec92da9d460caecb438681bf4d2,
+        type: 3}
+    - target: {fileID: 54462729526222586, guid: b4d7317b29fc64c6c95e6270e799b96d,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 116
       objectReference: {fileID: 0}
-    - target: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 54462729526222586, guid: b4d7317b29fc64c6c95e6270e799b96d,
+        type: 2}
+      propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
-      propertyPath: m_TagString
-      value: Container
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114927119615308570, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
+    - {fileID: 114239245057618184, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b4d7317b29fc64c6c95e6270e799b96d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1213476549
@@ -1501,6 +1460,16 @@ Prefab:
       propertyPath: Floor
       value: 
       objectReference: {fileID: 1707502518}
+    - target: {fileID: 114433981592793976, guid: c37ad67e56de84ac49eaad61ba87f0ad,
+        type: 2}
+      propertyPath: attackDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114433981592793976, guid: c37ad67e56de84ac49eaad61ba87f0ad,
+        type: 2}
+      propertyPath: range
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c37ad67e56de84ac49eaad61ba87f0ad, type: 2}
   m_IsPrefabParent: 0
@@ -2161,37 +2130,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1707502517}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1848139323 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1859398944110524, guid: b4d7317b29fc64c6c95e6270e799b96d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1199210274}
---- !u!114 &1848139324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1848139323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fad243bcdce97e54ea9cad1f9fad6dcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalHp: 100
-  hp: 100
-  isPlayer: 0
-  DeadSprite: {fileID: 21300000, guid: 5c242ec92da9d460caecb438681bf4d2, type: 3}
---- !u!114 &1848139325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1848139323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c187be452618e4f8a1abab6552ba6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1861295725
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,7 +70,7 @@ public class PathFinding : MonoBehaviour {
 
 	//checa si el player esta dentro del cono de vision
 	IEnumerator LookForPlayer(){
-		while (playerIsNotDead) {
+		while (playerIsNotDead && agentReferences != null) {
 			if (Physics2D.Raycast (this.transform.position, (player.position - this.transform.position), ViewRange)){
 				hit = Physics2D.Raycast (this.transform.position, (player.position - this.transform.position), ViewRange);
 				//Debug.Log (hit.collider.tag + hit.collider.gameObject.name );
@@ -81,11 +81,9 @@ public class PathFinding : MonoBehaviour {
 				}
 				//Debug.Log (Vector2.Angle (this.transform.up, (agentReferences.Target2D.position - this.transform.position)));
 			}
-			if (agentReferences != null) {
-				if (agent.remainingDistance == 0f) {
-					agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime);
-					moving = false; 
-				}
+			if (agent.remainingDistance == 0f) {
+				agent.transform.rotation = Quaternion.Lerp (agent.transform.rotation, agentReferences.OriginalRotation, 10 * Time.fixedDeltaTime);
+				moving = false; 
 			}
 
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
@@ -94,10 +92,12 @@ public class PathFinding : MonoBehaviour {
 
 	//asgina el destino del nav mesh 
 	IEnumerator PursuitPlayer(){
-		agent.stoppingDistance = 1.5f; 
-		while (playerInRange && playerIsNotDead) {
+		if (agentReferences != null) {
+			agent.stoppingDistance = 1.5f; 
+		}
+		while (playerInRange && playerIsNotDead && agentReferences != null) {
 			agent.SetDestination (agentReferences.Target.position);
-			if (agent.remainingDistance < 2.5f && Vector3.Angle (this.transform.up, (player.position - this.transform.position)) < (ViewAngle / 2)) {
+			if (agent.remainingDistance < 1f && Vector3.Angle (this.transform.up, (player.position - this.transform.position)) < (ViewAngle / 2)) {
 				//Debug.Log ("Attemping to damage player");
 				if (agentReferences.Target.gameObject.GetComponent<DamageableEntity> ()) {
 					agentReferences.Target.gameObject.GetComponent<DamageableEntity> ().Damage (Damage);
@@ -108,8 +108,10 @@ public class PathFinding : MonoBehaviour {
 			}
 			yield return new WaitForSeconds (2 / SightUpdateQuality); 
 		}
-		agent.SetDestination (agentReferences.OriginalPosition);
-		agent.stoppingDistance = 0; 
+		if (agentReferences != null) {
+			agent.SetDestination (agentReferences.OriginalPosition);
+			agent.stoppingDistance = 0; 
+		}
 		yield return null; 
 	}
 		
